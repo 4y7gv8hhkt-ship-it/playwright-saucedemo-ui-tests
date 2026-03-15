@@ -9,4 +9,11 @@ test('standard user can log in and see products', async ({ page }) => {
 
   await expect(page).toHaveURL(/inventory/);
   await expect(page.getByText('Products')).toBeVisible();
+
+  await page.locator('[data-test="item-4-title-link"]').click();
+
+  await expect(page).toHaveURL(/inventory-item/);
+
+  await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
+
 });
