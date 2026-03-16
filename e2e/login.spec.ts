@@ -1,19 +1,15 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
+import { InventoryPage } from '../pages/InventoryPage';
 
 test('standard user can log in and see products', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
+  const loginPage = new LoginPage(page);
+  const inventoryPage = new InventoryPage(page);
 
-  await page.locator('[data-test="username"]').fill('standard_user');
-  await page.locator('[data-test="password"]').fill('secret_sauce');
-  await page.locator('[data-test="login-button"]').click();
+  await loginPage.goto();
+  await loginPage.login('standard_user', 'secret_sauce');
+  await loginPage.expectInventoryPage();
 
-  await expect(page).toHaveURL(/inventory/);
-  await expect(page.getByText('Products')).toBeVisible();
-
-  await page.locator('[data-test="item-4-title-link"]').click();
-
-  await expect(page).toHaveURL(/inventory-item/);
-
-  await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
-
+  await inventoryPage.openBackpackDetail();
+  await inventoryPage.expectBackpackDetailPage();
 });
