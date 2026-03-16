@@ -1,4 +1,4 @@
-# playwright-ui-check
+# playwright-saucedemo-ui-tests
 
 Sauce Demo を対象にした、Playwright による UI 確認のサンプル成果物です。
 
